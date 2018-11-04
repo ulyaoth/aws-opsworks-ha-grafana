@@ -17,6 +17,11 @@ yum_package ['mlocate', 'git', 'htop', 'wget', 'grafana'] do
   action :install
 end
 
+yum_package [grafana] do
+  action :nothing
+  notifies :enable, 'service[grafana]', :delayed
+end
+
 service 'grafana' do
   supports :status => true, :restart => true, :reload => true, :start => true, :enable => true
   action :nothing
@@ -30,7 +35,3 @@ template '/etc/yum.repos.d/grafana.repo' do
   notifies :install, 'yum_package[grafana]', :immediate
 end
 
-yum_package [grafana] do
-  action :nothing
-  notifies :enable, 'service[grafana]', :delayed
-end
