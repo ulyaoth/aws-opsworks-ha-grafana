@@ -23,7 +23,7 @@ template '/etc/yum.repos.d/grafana.repo' do
   owner 'root'
   group 'root'
   mode '0755'
-  notifies :install, 'yum_package[grafana]', :immediate
+  notifies :install, 'yum_package['mlocate', 'git', 'htop', 'wget', 'grafana']', :immediate
 end
 
 yum_package ['mlocate', 'git', 'htop', 'wget', 'grafana'] do
