@@ -17,7 +17,7 @@ yum_package ['mlocate', 'git', 'htop', 'wget'] do
   action :install
 end
 
-yum_package [grafana] do
+yum_package 'grafana' do
   action :nothing
   notifies :enable, 'service[grafana]', :delayed
 end
