@@ -25,19 +25,16 @@ yum_package ['mlocate', 'git', 'htop', 'wget'] do
   action :install
 end
 
-### Install grafana with yum.
-yum_package 'grafana' do
-  action :nothing
-  flush_cache [ :before ]
-  notifies :enable, 'service[grafana-server]', :delayed
+### Start - Install Grafana rpm.
+remote_file "#{Chef::Config[:file_cache_path]}/grafana-5.3.2-1.x86_64.rpm" do
+    source "https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.3.2-1.x86_64.rpm"
+    action :create
 end
 
-### Create yum repository file for grafana.
-template '/etc/yum.repos.d/grafana.repo' do
-  source "grafana.repo.erb"
-  owner 'root'
-  group 'root'
-  mode '0755'
-  notifies :install, 'yum_package[grafana]', :immediate
+rpm_package "grafana" do
+    source "#{Chef::Config[:file_cache_path]}/grafana-5.3.2-1.x86_64.rpm"
+    action :install
+    ignore_failure true
+	notifies :enable, 'service[grafana-server]', :delayed
 end
-
+### End - Install Grafana rpm.
