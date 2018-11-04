@@ -3,7 +3,7 @@ stack_info = search("aws_opsworks_stack").first
 
 ### Start - Install basic packages.
 remote_file "#{Chef::Config[:file_cache_path]}/ulyaoth-latest.amazonlinux.x86_64.rpm" do
-    source "https://downloads.ulyaoth.net/rpm/ulyaoth-latest.amazonlinux.x86_64.rpm"
+    source "https://downloads.ulyaoth.com/rpm/ulyaoth-latest.amazonlinux.x86_64.rpm"
     action :create
 end
 
@@ -23,7 +23,7 @@ template '/etc/yum.repos.d/grafana.repo' do
   owner 'root'
   group 'root'
   mode '0755'
-  notifies :install, 'yum_package[grafana]', :immediate
+  notifies :install, 'yum_package['mlocate', 'git', 'htop', 'wget', 'grafana']', :immediate
 end
 
 yum_package ['mlocate', 'git', 'htop', 'wget', 'grafana'] do
