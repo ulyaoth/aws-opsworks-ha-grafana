@@ -1,10 +1,10 @@
 instance_info = search(:aws_opsworks_instance, "self:true").first
 stack_info = search("aws_opsworks_stack").first
 
-$mysql_host_var = node[:ulyaoth_tutorials][:mysql_host]
-$mysql_user_var = node[:ulyaoth_tutorials][:mysql_user],
-$mysql_password_var = node[:ulyaoth_tutorials][:mysql_password],
-$memcache_host_var = node[:ulyaoth_tutorials][:memcache_host]
+$mysql_host_var = node[:ulyaoth_tutorial][:mysql_host]
+$mysql_user_var = node[:ulyaoth_tutorial][:mysql_user]
+$mysql_password_var = node[:ulyaoth_tutorial][:mysql_password]
+$memcache_host_var = node[:ulyaoth_tutorial][:memcache_host]
 
 ### set the grafana service, so it can be started.
 service 'grafana-server' do
