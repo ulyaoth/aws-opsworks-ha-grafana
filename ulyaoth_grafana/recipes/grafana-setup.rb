@@ -21,7 +21,7 @@ end
 ### End - Install Ulyaoth Repository.
 
 ### Install some additional packages with yum.
-yum_package ['mlocate', 'git', 'htop', 'wget'] do
+yum_package ['mlocate', 'git', 'htop', 'wget', 'urw-fonts'] do
   action :install
 end
 
