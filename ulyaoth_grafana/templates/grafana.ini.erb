@@ -110,7 +110,7 @@ provider = memcache
 # redis: config like redis server e.g. `addr=127.0.0.1:6379,pool_size=100,db=grafana`
 # mysql: go-sql-driver/mysql dsn config string, e.g. `user:password@tcp(127.0.0.1:3306)/database_name`
 # postgres: user=a password=b host=localhost port=5432 dbname=c sslmode=disable
-provider_config = <%= @memcache_host %>
+provider_config = <%= @memcache_host %>:11211
 
 # Session cookie name
 cookie_name = grafana_sess
