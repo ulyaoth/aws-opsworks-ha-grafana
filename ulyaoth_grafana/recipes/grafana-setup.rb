@@ -28,6 +28,7 @@ end
 ### Install grafana with yum.
 yum_package 'grafana' do
   action :nothing
+  flush_cache [ :before ]
   notifies :enable, 'service[grafana-server]', :delayed
 end
 
