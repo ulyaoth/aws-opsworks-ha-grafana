@@ -13,7 +13,7 @@ rpm_package "ulyaoth" do
     ignore_failure true
 end
 
-yum_package ['mlocate', 'git', 'htop', 'wget', 'grafana'] do
+yum_package ['mlocate', 'git', 'htop', 'wget'] do
   action :install
 end
 
