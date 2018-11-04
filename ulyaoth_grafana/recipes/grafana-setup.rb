@@ -29,11 +29,18 @@ end
 remote_file "#{Chef::Config[:file_cache_path]}/grafana-5.3.2-1.x86_64.rpm" do
     source "https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.3.2-1.x86_64.rpm"
     action :create
+	notifies :run, 'execute[rpm-import-gpg-grafana]', :immediately
+end
+
+execute 'rpm-import-gpg-grafana' do
+  command 'rpm --import https://grafanarel.s3.amazonaws.com/RPM-GPG-KEY-grafana'
+  action :nothing
+  notifies :install, 'rpm_package[grafana]', :immediately
 end
 
 rpm_package "grafana" do
     source "#{Chef::Config[:file_cache_path]}/grafana-5.3.2-1.x86_64.rpm"
-    action :install
+    action :nothing
     ignore_failure true
 	notifies :enable, 'service[grafana-server]', :delayed
 end
