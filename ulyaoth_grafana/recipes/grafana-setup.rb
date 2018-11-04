@@ -42,6 +42,23 @@ rpm_package "grafana" do
     source "#{Chef::Config[:file_cache_path]}/grafana-5.3.2-1.x86_64.rpm"
     action :nothing
     ignore_failure true
-	notifies :enable, 'service[grafana-server]', :delayed
+	notifies :create, 'template[/etc/grafana/grafana.ini]', :immediately
 end
 ### End - Install Grafana rpm.
+
+### Create the grafana config file.
+template '/etc/grafana/grafana.ini' do
+  source "grafana.ini.erb"
+  owner 'root'
+  group 'grafana'
+  mode '0640'
+  action :nothing
+  variables({
+    :mysql_host => node[:ulyaoth_tutorials][:mysql_host],
+    :mysql_user => node[:ulyaoth_tutorials][:mysql_user],
+    :mysql_password => node[:ulyaoth_tutorials][:mysql_password],
+    :memcache_host => node[:ulyaoth_tutorials][:memcache_host]
+  })
+  notifies :enable, 'service[grafana-server]', :immediately
+  notifies :start, 'service[grafana-server]', :delayed
+end
