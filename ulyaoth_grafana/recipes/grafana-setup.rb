@@ -13,6 +13,10 @@ rpm_package "ulyaoth" do
     ignore_failure true
 end
 
+yum_package ['mlocate', 'git', 'htop', 'wget', 'grafana'] do
+  action :install
+end
+
 service 'grafana' do
   supports :status => true, :restart => true, :reload => true, :start => true, :enable => true
   action :nothing
@@ -23,10 +27,10 @@ template '/etc/yum.repos.d/grafana.repo' do
   owner 'root'
   group 'root'
   mode '0755'
-  notifies :install, 'yum_package['mlocate', 'git', 'htop', 'wget', 'grafana']', :immediate
+  notifies :install, 'yum_package[grafana]', :immediate
 end
 
-yum_package ['mlocate', 'git', 'htop', 'wget', 'grafana'] do
+yum_package [grafana] do
   action :nothing
   notifies :enable, 'service[grafana]', :delayed
 end
